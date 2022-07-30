@@ -22,8 +22,11 @@ script:
   - docker --version # print the version for logging
   - docker build -t simple-node .
   - docker tag simple-node ridzy619/simple-node:latest
+  - docker build -t simple-reverse-proxy .
+  - docker tag simple-reverse-proxy ridzy619/simple-reverse-proxy:latest
 
 # Tasks to perform after the process is successful. Formatting the Docker username and password as below enables you to programmatically log in without having the password exposed in logs.
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push ridzy619/simple-node
+  - docker push ridzy619/simple-reverse-proxy
