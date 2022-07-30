@@ -4,9 +4,8 @@ import bodyParser from 'body-parser'
 
 ( async () => {
   const app = express();
-  const port = 8082;
+  const port = process.env.PORT || 8082;
   app.use(bodyParser.json());
-  console.log(1000000)
 
   app.get("/health",  (_, res) => {
     return res.status(200).send("Healthy!")
@@ -17,7 +16,7 @@ import bodyParser from 'body-parser'
   });
 
   app.listen( port, () => {
-    console.log( `server running http://localhost:${ port }` );
+    console.log( `server running http://0.0.0.0:${ port }` );
     console.log( `press CTRL+C to stop server` );
   });
 })();

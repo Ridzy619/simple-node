@@ -18,4 +18,4 @@ spec:
       - name: simple-node
         image: ridzy619/simple-node
         ports:
-        - containerPort: 80
+        - containerPort: 8080
