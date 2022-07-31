@@ -1,20 +1,21 @@
 # Overview
 
-This is a very simple, bare-bones NodeJS project created for you to use with Docker.
+This is a very simple, bare-bones NodeJS project created with Docker. The repository has a CI/CD pipeline setup with Travis-CI which continously integrates codes merged to the master branch. 
 
-## Local Setup
+The code integration updates the docker images for the both the NodeJS app and the Nginx reverse-proxy.
 
-**_Note_**: This is only needed if you want to run the app locally. You don't need to install the dependencies or run the server if you are running the code inside a Docker container.
+The code also includes the yaml file for creating the EKS cluster on AWS using EKSCTL.
 
-- Install dependencies: `npm install`
-- Run server: `node server.js`
+- Create a cluster by running `eksctl create cluster -f cluster.yaml`
 
-## Container Setup
+## After Creating the Cluster
 
-- Build image: `docker build .`
-- Run container with image: `docker run {image_id}` where `image_id` can be retrieved by running `docker images` and found under the column `IMAGE ID`
-- You can use the `-d` flag to run the container in the background. This will enable you to run other commands in your terminal while the container is running.
+Run the following commands to create the pods and the api service for connecting to the pods. The pods will run the NodeJS application with the specified replicat set. Liveness probe has been configured which will ensure that the kubelet will attempt to recreate a new pod to replace an ailing one.
 
-## Container Teardown
+- `kubectl apply -f deployment.yaml`
+- `kubectl apply -f service.yaml`
 
-- Remove container: `docker kill {container_id}` where `container_id` can be retrieved by running `docker ps` and found under the column `CONTAINER ID`
+Run the following commands to create the pods for the reverse-proxy that sits in front of the application
+
+- `kubectl apply -f ./nginx/deployment.yaml`
+- `kubectl apply -f ./nginx/service.yaml`
