@@ -10,4 +10,4 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    run: my-app
+    app: my-app
