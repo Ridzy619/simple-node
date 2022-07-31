@@ -18,10 +18,10 @@ spec:
       - name: simple-node
         image: ridzy619/simple-node
         ports:
-        - containerPort: 8080
-      livenessProbe:
-        httpGet:
-          path: /health
-          port: 8080
-        initialDelaySeconds: 3
-        periodSeconds: 3
+        - containerPort: 8082
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8082
+          initialDelaySeconds: 3
+          periodSeconds: 3
